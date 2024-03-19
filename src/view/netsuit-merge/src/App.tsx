@@ -1,9 +1,16 @@
 import { useCallback } from "react";
 import { useMergeLink } from "@mergeapi/react-merge-link";
+import axios from "axios";
 
 function App() {
   const onSuccess = useCallback((public_token: string) => {
     console.log(public_token);
+    axios
+      .post("http://localhost:8200/public-token", {
+        publicToken: public_token,
+      })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   const { open, isReady } = useMergeLink({
